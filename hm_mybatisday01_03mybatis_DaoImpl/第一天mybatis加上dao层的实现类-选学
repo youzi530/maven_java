@@ -1,0 +1,17 @@
+这是使用mybatis加上dao层的实现类来构建项目
+也是可以的！
+
+改变之处在于：
+    新建了实现类，并在实现类里面写了一个私有的SqlSessionFactory属性
+    并传入构造方法
+    然后在findAll方法里面：
+        //1、使用工厂生产sqlSession对象
+        SqlSession session = factory.openSession();
+        //2、查询
+        List<User> users = session.selectList("dao.UserDao.findAll");
+        //3、释放资源
+        session.close();
+    再稍微改下测试类里面的方法
+
+
+    无意义！！！！！！！！！！！！！！！

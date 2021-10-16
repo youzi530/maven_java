@@ -1,0 +1,7 @@
+var fileCenterMain = {
+
+    add:function () {
+
+    }
+
+}

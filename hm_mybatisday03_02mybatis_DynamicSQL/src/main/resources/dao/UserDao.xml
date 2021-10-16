@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="dao.UserDao">
+        <!--配置查询所有-->
+        <select id="findAll" resultType="domain.User">
+            select * from user;
+        </select>
+
+
+        <!--配置根据id查询用户-->
+        <select id="findById" parameterType="java.lang.Integer" resultType="domain.User">
+            select * from user where id = #{id}
+        </select>
+
+        <!--配置模糊查询用户-->
+        <select id="findByName" parameterType="String" resultType="domain.User">
+             select * from user where username like #{username}
+            <!-- select *  from user where username like '%${value}%' -->
+        </select>
+
+        <!--根据queryVo中的条件查询用户-->
+        <select id="findUserByVo" parameterType="domain.QueryVo" resultType="domain.User">
+            select * from user where username like #{user.username}
+        </select>
+
+        <!--根据条件查询用户-->
+        <select id="findByCondition" resultType="domain.User" parameterType="domain.User">
+            select * from user
+            <where>
+                <if test="username != null">
+                    and username = #{username}
+                </if>
+                <if test="sex !=null">
+                    and sex = #{sex}
+                </if>
+            </where>
+        </select>
+
+        <!--根据queryvo中提供的ID集合，查询用信息-->
+        <select id="findUserInIds" resultType="domain.User" parameterType="domain.QueryVo">
+            select * from user
+            <where>
+                <if test="ids != null">
+                    <foreach collection="ids" open="and id in (" close=")" item="id" separator=",">
+                        #{id}
+                    </foreach>
+                </if>
+            </where>
+        </select>
+    </mapper>

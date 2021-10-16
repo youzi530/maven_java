@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--引入外部数据库配置文件-->
+    <properties resource="jdbcConfig.properties"></properties>
+
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!--配置别名-->
+    <typeAliases>
+        <package name="domain"/>
+    </typeAliases>
+
+    <!--配置mysql环境-->
+    <environments default="mysql">
+        <environment id="mysql">
+            <!--配置事务的类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--配置数据源（连接池）-->
+            <dataSource type="POOLED">
+                <!--配置连接数据库的基本信息-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--指定映射配置文件的位置，映射文件指的是每个dao的独立的配置文件-->
+    <!-- 如果是用注解来配置的话，此处应该使用class属性指定被注解的dao的全限定类名-->
+    <mappers>
+       <package name="dao"/>
+    </mappers>
+</configuration>

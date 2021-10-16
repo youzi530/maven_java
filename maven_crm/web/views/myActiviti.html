@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link rel="stylesheet" href="../crmcss/page/bootstrap.min.css">
+		<!--用户设置-->
+		<script src="../hongcheng/particulars/system/introduction/js/introduction.main.js"></script>
+		<script src="../hongcheng/particulars/system/introduction/js/introduction.html.js"></script>
+		<script src="../hongcheng/particulars/system/introduction/js/introduction.js"></script>
+		<script src="../hongcheng/particulars/system/introduction/js/introduction.controller.js"></script>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="WangBT">
+		<link rel="icon" href="../common/images/logo_icon.ico" type="image/x-icon">
+
+		<link rel="stylesheet" href="../common/js/iCheck/skins/minimal/minimal.css">
+		<link rel="stylesheet" href="../common/js/iCheck/skins/square/square.css">
+		<link rel="stylesheet" href="../common/css/clndr.css">
+		<link rel="stylesheet" href="../common/css/style.css">
+		<link rel="stylesheet" href="../common/css/style-responsive.css">
+		<link rel="stylesheet" href="../common/js/bootstrap-table/css/bootstrap-table.css">
+
+		<link rel="stylesheet" href="../common/js/sweetAlert/css/sweet-alert.css">
+		<link rel="stylesheet" href="../hongcheng/custom/no-model/css/jquery.mCustomScrollbar.min.css">
+		<link rel="stylesheet" href="../hongcheng/custom/no-model/css/noModel.css">
+
+		<!--分页-->
+		<script type="text/javascript" src="../common/js/jquery-2.2.3.min.js"></script>
+		<script type="text/javascript" src="../crmjs/page/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="../crmjs/page/jquery.dataTables.bootstrap.js"></script>
+
+		<script type="text/javascript" src="../hongcheng/custom/commonality.js"></script>
+
+		<script src="../crmjs/afterLogin.js"></script>
+		<script src="../crmjs/crmajax.js"></script>
+		<script src="../crmjs/adminHide.js"></script>
+		<script src="../crmjs/sspHide.js"></script>
+		<script src="../crmjs/clientHide.js"></script>
+
+		<script src="../hongcheng/particulars/client/myActiviti/js/my-activiti.html.js"></script>
+		<script src="../hongcheng/particulars/client/myActiviti/js/my-activiti.main.js"></script>
+		<script src="../hongcheng/particulars/client/myActiviti/js/my-activiti.controller.js"></script>
+		<script src="../hongcheng/particulars/client/myActiviti/js/my-activity.js"></script>
+
+		<script>
+			$(function () {
+				//权限控制
+				afterLogin.afterlogin()
+				//权限，名字，性别，工号
+				var userId;
+				crmajax.ajax({
+					url:"identity.do",
+					type:"post",
+					data:{
+
+					},
+					success:function (data) {
+						data = data.substring(3,data.length);
+						var datas = data.split(",");
+						//alert(datas[0] + datas[1] + datas[2] + datas[3])
+						userId = parseInt(datas[3]);//number类型
+						$("#userId").val(datas[3])//工号
+						$("#identity").val(datas[0]);//身份
+						var de = datas[0].substring(0,2);
+						$("#department").val(de);//部门
+						if (de == "客户"){
+							$("#department").val("客户部门")
+						}else if ("供销"){
+							$("#department").val("供销部门")
+						}else {
+							$("#department").val("全部权限")
+						}
+						$("#username").text(datas[1])
+						if (datas[2] == "女"){
+							$("#photo").attr("src","../common/images/photos/user5.png")
+						}
+						vertifyActivity.query()
+					},
+					error:function (data) {
+						sweetAlert.caution("未知错误",data)
+					}
+				})
+
+
+			})
+
+			//页面函数
+			function selectAll(obj) {
+				$(".itemSelect").prop("checked",obj.checked);
+			}
+		</script>
+		<title>CRM管理系统</title>
+		<script src="../crmjs/jquery.mousewheel.min.js"></script>
+		<style type="text/css">
+			.jqstooltip {
+				position: absolute;
+				left: 30px;
+				top: 0px;
+				display: block;
+				visibility: hidden;
+				background: rgb(0, 0, 0) transparent;
+				background-color: rgba(0, 0, 0, 0.6);
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+				color: white;
+				font: 10px arial, san serif;
+				text-align: left;
+				white-space: nowrap;
+				border: 0px solid white;
+				border-radius: 3px;
+				-webkit-border-radius: 3px;
+				z-index: 10000;
+			}
+			
+			.jqsfield {
+				color: white;
+				padding: 5px 5px 5px 5px;
+				font: 10px arial, san serif;
+				text-align: left;
+			}
+		</style>
+	</head>
+
+	<body class="sticky-header">
+		<section>
+			<div class="left-side sticky-left-side" tabindex="5000" style="overflow: hidden; outline: none;">
+				<div class="logo">
+					<a href="main.html"><img src="../common/images/logo_icon.png" alt=""></a>
+				</div>
+
+				<div class="logo-icon text-center">
+					<a href="main.html"><img src="../common/images/logo_icon.png" alt=""></a>
+				</div>
+
+					<!--sidebar nav start-->
+					<ul id="menuUL" class="nav nav-pills nav-stacked custom-nav">
+
+						
+					</ul>
+				</div>
+			</div>
+			<!-- left side end-->
+
+			<!-- main content start-->
+			<div class="main-content">
+
+				<!-- header section start-->
+				<div class="header-section">
+
+					<!--toggle button start-->
+					<a class="toggle-btn"><i class="fa fa-bars"></i></a>
+					<!--toggle button end-->
+					<!--search end-->
+
+					<!--notification menu start -->
+					<div class="menu-right">
+						<ul class="notification-menu">
+							<li>
+								<a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+
+									<img id="photo" alt="" src="../common/images/photos/user1.png">
+									<span id="username"></span>
+									<input type="hidden" id="userId" value="">
+									<input type="hidden" id="identity">
+									<input type="hidden" id="department">
+									<span class="caret"></span>
+
+								</a>
+								<ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+									<li>
+										<a href="javascript:void(0);" onclick="introductionMain.display()"><i class="fa fa-user"></i> 简介</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" onclick="introductionMain.settings()"><i class="fa fa-cog"></i> 设置</a>
+									</li>
+									<li>
+										<a href="javascript:void(0);" onClick="mainMenu.logOut()"><i class="fa fa-sign-out"></i> 退出</a>
+									</li>
+								</ul>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+				<div id="mainWrapper" class="wrapper">
+
+					<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+					<title>我的流程</title>
+
+					<!-- 主页面 -->
+					<div>
+						<div id="my_activiti">
+
+							<nav id="criteriaNav" class="navbar navbar-default" role="navigation" style="margin-bottom:10px">
+								<div class="form-inline center-block" style="margin-left: 10px;">
+									<div class="row" style="margin-top: 10px;margin-right: 0px;">
+										<div class="col-sm-5"><button type="button" class="btn btn-info btn-sm"  style="margin-right: 0.5em;display: none" ><i class="fa fa-plus"></i>添加</button>
+											<button type="button" class="btn btn-info btn-sm" onclick="vertifyActivitiMain.delBatchShare()" style="margin-right: 0.5em;"><i class="fa fa-minus"></i>删除</button></div>
+									</div>
+								</div>
+							</nav>
+
+							<nav id="tableNav" class="navbar navbar-default" role="navigation" style="margin-bottom:10px">
+								<div class="bootstrap-table">
+									<div class="fixed-table-toolbar"></div>
+									<div class="fixed-table-container" style="padding-bottom: 0px;">
+										<div class="fixed-table-header" style="display: none;">
+											<table></table>
+										</div>
+										<div class="fixed-table-body">
+											<div class="fixed-table-loading" style="top: 41px; display: none;">正在努力地加载数据中，请稍候……</div>
+											<table id="vertify_activity_table" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th class="bs-checkbox " style="width: 36px; " data-field="0">
+															<div class="th-inner "><input name="btSelectAll" type="checkbox" onclick="selectAll(this)"></div>
+															<div class="fht-cell"></div>
+														</th>
+														<th style="" data-field="clientName">
+															<div class="th-inner ">客户名称</div>
+															<div class="fht-cell"></div>
+														</th>
+														<th style="" data-field="workAddress">
+															<div class="th-inner ">工作地址</div>
+															<div class="fht-cell"></div>
+														</th>
+														<th style="" data-field="mainPhone">
+															<div class="th-inner ">主要电话</div>
+															<div class="fht-cell"></div>
+														</th>
+														<th style="" data-field="userName">
+															<div class="th-inner ">申请人</div>
+															<div class="fht-cell"></div>
+														</th>
+														<th style="" data-field="receiveName">
+															<div class="th-inner ">共享人</div>
+															<div class="fht-cell"></div>
+														</th>
+														<th style="" data-field="approveName">
+															<div class="th-inner ">审批人</div>
+															<div class="fht-cell"></div>
+														</th>
+														<th style="width: 100px; " data-field="approveUserId">
+															<div class="th-inner ">状态</div>
+															<div class="fht-cell"></div>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+<!--													<tr class="no-records-found">-->
+<!--														<td colspan="8">没有找到匹配的记录</td>-->
+<!--														<td></td>-->
+<!--														<td></td>-->
+<!--														<td></td>-->
+<!--														<td></td>-->
+<!--														<td></td>-->
+<!--														<td></td>-->
+<!--														<td></td>-->
+<!--														<td>-->
+
+<!--																		<select style="height: 31px"  class="form-control" id="rank">-->
+<!--																			<option value="待审批">待审批</option>-->
+<!--																			<option value="通过">通过</option>-->
+<!--																			<option value="否决">否决</option>-->
+<!--																			</select>-->
+
+<!--														</td>-->
+<!--													</tr>-->
+												</tbody>
+											</table>
+										</div>
+
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</nav>
+						</div>
+					</div>
+
+				</div>
+				<!--body wrapper end-->
+
+				<!--footer section start-->
+				<footer>
+					2017 © 弘成集团有限公司
+				</footer>
+				<!--footer section end-->
+
+			</div>
+			<!-- main content end-->
+		</section>
+		<script src="../hongcheng/main/js/main-menu.js"></script>
+		<script type="text/javascript">
+			// JS加载菜单
+			mainMenu.menu('myActiviti');
+		</script>
+
+		<!-- Placed js at the end of the document so the pages load faster -->
+		<script src="../common/js/bootstrap.js"></script>
+		<script src="../common/js/jquery-ui-1.9.2.custom.min.js"></script>
+		<script src="../common/js/jquery-migrate-1.2.1.min.js"></script>
+		<script src="../common/js/modernizr.min.js"></script>
+		<script src="../common/js/jquery.nicescroll.js"></script>
+
+		<!--easy pie chart-->
+		<script src="../common/js/easypiechart/jquery.easypiechart.js"></script>
+		<script src="../common/js/easypiechart/easypiechart-init.js"></script>
+
+		<!--Sparkline Chart-->
+		<script src="../common/js/sparkline/jquery.sparkline.js"></script>
+		<script src="../common/js/sparkline/sparkline-init.js"></script>
+
+		<!--icheck -->
+		<script src="../common/js/iCheck/jquery.icheck.js"></script>
+		<script src="../common/js/icheck-init.js"></script>
+
+		<!--../common scripts for all pages-->
+		<script src="../common/js/scripts.js"></script>
+		<div id="ascrail2000" class="nicescroll-rails" style="width: 6px; z-index: 1000; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 0px; height: 100%; right: 0px; opacity: 0;">
+			<div style="position: relative; top: 0px; float: right; width: 6px; height: 551px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div>
+		</div>
+		<div id="ascrail2000-hr" class="nicescroll-rails" style="height: 6px; z-index: 1000; background: rgb(66, 79, 99); position: fixed; left: 0px; width: 100%; bottom: 0px; cursor: default; display: none; opacity: 0;">
+			<div style="position: relative; top: 0px; height: 6px; width: 1920px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div>
+		</div>
+		<div id="ascrail2001" class="nicescroll-rails" style="width: 3px; z-index: 100; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 0px; left: 237px; height: 742px; display: none; opacity: 0;">
+			<div style="position: relative; top: 0px; float: right; width: 3px; height: 0px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div>
+		</div>
+		<div id="ascrail2001-hr" class="nicescroll-rails" style="height: 3px; z-index: 100; background: rgb(66, 79, 99); top: 739px; left: 0px; position: fixed; cursor: default; display: none; opacity: 0;">
+			<div style="position: relative; top: 0px; height: 3px; width: 0px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px; left: 0px;"></div>
+		</div>
+
+		<!-- sweeAlert -->
+		<script src="../common/js/sweetAlert/js/sweet-alert.js"></script>
+		<script src="../common/js/sweetAlert/sweetAlert.js"></script>
+
+		<!-- noModel -->
+		<script src="../hongcheng/custom/no-model/js/jquery-ui.min.js"></script>
+		<script src="../hongcheng/custom/no-model/js/jquery.mCustomScrollbar.min.js"></script>
+		<script src="../hongcheng/custom/no-model/js/jquery.noModel.js"></script>
+
+		<!-- bootstarp-table -->
+		<script src="../common/js/bootstrap-table/js/bootstrap-table.js"></script>
+		<script src="../common/js/bootstrap-table/js/bootstrap-table-zh-CN.min.js"></script>
+
+		<!-- verification -->
+		<script src="../hongcheng/custom/verification.js"></script>
+
+		<!--jquery.form  -->
+		<script src="../common/js/jquery-form/jquery.form.js"></script>
+
+		<div>
+			<div class="sweet-overlay" tabindex="-1"></div>
+			<div class="sweet-alert" tabindex="-1">
+				<div class="icon error"><span class="x-mark"><span class="line left"></span><span class="line right"></span></span>
+				</div>
+				<div class="icon warning"> <span class="body"></span> <span class="dot"></span> </div>
+				<div class="icon sweetAlert-info"> <span class="body"></span> <span class="dot"></span> </div>
+				<div class="icon success"> <span class="line tip"></span> <span class="line long"></span>
+					<div class="placeholder"></div>
+					<div class="fix"></div>
+				</div>
+				<div class="icon custom"></div>
+				<h2>Title</h2>
+				<p>Text</p><button class="cancel" tabindex="2">Cancel</button><button class="confirm" tabindex="1">OK</button></div>
+		</div>
+	</body>
+
+</html>

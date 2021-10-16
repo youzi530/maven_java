@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="../crmcss/page/bootstrap.min.css">
+
+	<script src="../crmjs/ajax.js"></script>
+	<script src="../crmjs/jquery-3.3.1.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="WangBT">
+	<link rel="icon" href="../common/images/logo_icon.ico" type="image/x-icon">
+
+	<link rel="stylesheet" href="../common/js/iCheck/skins/minimal/minimal.css">
+	<link rel="stylesheet" href="../common/js/iCheck/skins/square/square.css">
+	<link rel="stylesheet" href="../common/css/clndr.css">
+	<link rel="stylesheet" href="../common/css/style.css">
+	<link rel="stylesheet" href="../common/css/style-responsive.css">
+	<link rel="stylesheet" href="../common/js/bootstrap-table/css/bootstrap-table.css">
+	<link rel="stylesheet" href="../common/js/bootstrap-multiselect/css/bootstrap-multiselect.css">
+	<link rel="stylesheet" href="../common/js/sweetAlert/css/sweet-alert.css">
+	<link rel="stylesheet" href="../hongcheng/custom/no-model/css/jquery.mCustomScrollbar.min.css">
+	<link rel="stylesheet" href="../hongcheng/custom/no-model/css/noModel.css">
+	<script type="text/javascript" src="../common/js/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript" src="../crmjs/page/jquery.dataTables.min.js">
+
+	</script><script type="text/javascript" src="../crmjs/page/jquery.dataTables.bootstrap.js"></script>
+	<script type="text/javascript" src="../hongcheng/custom/commonality.js"></script>
+	<title>CRM管理系统</title>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script><style type="text/css">.jqstooltip { position: absolute;left: 30px;top: 0px;display: block;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;border: 0px solid white;border-radius: 3px;-webkit-border-radius: 3px;z-index: 10000;}.jqsfield { color: white;padding: 5px 5px 5px 5px;font: 10px arial, san serif;text-align: left;}</style>
+	<script src="../crmjs/afterLogin.js"></script>
+	<script src="../crmjs/crmajax.js"></script>
+	<script src="../crmjs/adminHide.js"></script>
+	<script src="../crmjs/sspHide.js"></script>
+	<script src="../crmjs/clientHide.js"></script>
+	<script>
+		$(function () {
+			//权限控制
+			afterLogin.afterlogin()
+			//权限，名字，性别，工号
+			var userId;
+			crmajax.ajax({
+				url:"identity.do",
+				type:"post",
+				data:{
+
+				},
+				success:function (data) {
+					data = data.substring(3,data.length);
+					var datas = data.split(",");
+					alert(datas[0] + datas[1] + datas[2] + datas[3]);
+					$("#identity").val(datas[0]);
+					console.log($("#identity").val());
+					// console.log($("#identity").val());
+					userId = parseInt(datas[3]);//number类型
+					$("#username").text(datas[1])
+					if (datas[2] == "女"){
+						$("#photo").attr("src","../common/images/photos/user5.png")
+					}
+					$ajax({
+						url:"see.call",
+						type:"get",
+						data:{
+						},
+						success:function(data){
+							// alert(data);
+							callInfoMain.datatablesDestroy();
+							$("#quote_table tbody").empty();
+							for (var i=0;i<data.length;i++)
+							{addTr4(data[i].id,data[i].sName,data[i].content)}
+							// alert(document.getElementById("2gys").innerHTML);id
+							callInfoMain.datatablesCreate();
+						},
+						error:function(error){
+							alert(error);
+						}
+					});
+				},
+				error:function (data) {
+					sweetAlert.caution("未知错误",data)
+				}
+			});
+
+		})
+	</script>
+
+</head>
+<script>
+	function overload3(){
+		// $("#realName_").attr("value","");
+		$("tr").not($("#thesecond")).remove();
+		$ajax({
+			url:"see.call",
+			type:"get",
+			data:{
+			},
+			success:function(data){
+				// alert(data);
+				callInfoMain.datatablesDestroy();
+				$("#quote_table tbody").empty();
+
+				for (var i=0;i<data.length;i++)
+				{addTr4(data[i].id,data[i].sName,data[i].content);}
+				// alert(document.getElementById("2gys").innerHTML);
+				callInfoMain.datatablesCreate();
+			},
+			error:function(error){
+				alert(error);
+			}
+		});
+	}
+
+	function chaxun3() {
+		$("tr").not($("#thesecond")).remove();
+		var sName=$("#callName_").val();
+		console.log(sName);
+		$ajax({
+			url:"chaxun.call",
+			type:"get",
+			data:{
+				sName:sName
+			},
+			success:function(data){
+				var date=data.substring(3,data.length);
+				if(date=="[]"){
+					sweetAlert.caution("温馨提示", "供应商不存在");
+				}else{
+					var json4 = JSON.parse(date);
+					callInfoMain.datatablesDestroy();
+					$("#quote_table tbody").empty();
+
+					for (var i=0;i<json4.length;i++)
+					{addTr4(json4[i].id,json4[i].sName,json4[i].content);}
+					callInfoMain.datatablesCreate();
+				}
+
+			},
+			error:function(error){
+				alert(error);
+			}
+		});
+
+	}
+</script>
+<body class="sticky-header">
+<section>
+	<div class="left-side sticky-left-side" tabindex="5000" style="overflow: hidden; outline: none;">
+		<div class="logo">
+			<a href="main.html"><img src="../common/images/logo_icon.png" alt=""></a>
+		</div>
+
+		<div class="logo-icon text-center">
+			<a href="main.html"><img src="../common/images/logo_icon.png" alt=""></a>
+		</div>
+
+		<!--sidebar nav start-->
+		<ul id="menuUL" class="nav nav-pills nav-stacked custom-nav">
+
+		</ul>
+
+	</div>
+	</div>
+	<!-- left side end-->
+
+	<!-- main content start-->
+	<div class="main-content">
+
+		<!-- header section start-->
+		<div class="header-section">
+
+			<!--toggle button start-->
+			<a class="toggle-btn"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+			<!--search end-->
+
+			<!--notification menu start -->
+			<div class="menu-right">
+				<ul class="notification-menu">
+					<li>
+						<a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+
+							<img id="photo" alt="" src="../common/images/photos/user1.png">
+							<span id="username"></span>
+							<input type="hidden" id="userId" value="">
+							<input type="hidden" id="identity">
+							<input type="hidden" id="department">
+							<span class="caret"></span>
+
+						</a>
+						<ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+							<li><a href="javascript:void(0);"><i class="fa fa-user"></i>  简介</a></li>
+							<li><a href="javascript:void(0);"><i class="fa fa-cog"></i>  设置</a></li>
+							<li><a href="javascript:void(0);" onClick="mainMenu.logOut()"><i class="fa fa-sign-out"></i> 退出</a></li>
+						</ul>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="mainWrapper" class="wrapper">
+
+
+
+
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<title>来电管理</title>
+			<link rel="stylesheet" href="../common/js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+
+			<script>
+
+				function  selectAllstar(obj) {
+					$(".aaa").prop("checked",obj.checked);
+
+				}
+			</script>
+			<script>
+				// window.onload=function(){
+				// 	$ajax({
+				// 		url:"see.call",
+				// 		type:"get",
+				// 		data:{
+				// 		},
+				// 		success:function(data){
+				// 			// alert(data);
+				// 			callInfoMain.datatablesDestroy();
+				// 			for (var i=0;i<data.length;i++)
+				// 			{addTr4(data[i].id,data[i].sName,data[i].content)}
+				// 			// alert(document.getElementById("2gys").innerHTML);id
+				// 			callInfoMain.datatablesCreate();
+				// 		},
+				// 		error:function(error){
+				// 			alert(error);
+				// 		}
+				// 	});
+				// }
+				function addTr4(i,sName,content) {
+					var tableObj = document.getElementById("second");
+					var row = tableObj.insertRow(tableObj.rows.length);
+					row.id=i;
+					var cell1 = row.insertCell(0);
+					cell1.class="bs-checkbox ";
+					cell1.innerHTML="<input data-index=\"0\" name=\"btSelectItem\" type=\"checkbox\" class='aaa' id='"+i+"'>";
+					var cell2=row.insertCell(1);
+					cell2.innerHTML="<a class=\"like\" href=\"javascript:void(0);\" title=\"弘成\" value='' id='"+i+"gys'>"+sName+"</a>";
+					var cell3=row.insertCell(2);
+					cell3.id=i+'content';
+					cell3.innerHTML=content;
+					var cell4=row.insertCell(3);
+					var id=$("#identity").val();
+					console.log(id);
+					if(id.indexOf("职员")>=0){
+						cell4.innerHTML="<a href=\"javascript:void(0);\" disabled=\"false\" onClick=\"quanxian()\" title=\"修改\" style=\"margin-left: 10px;margin-right: 10px;\"><i class=\"fa fa-wrench\"></i></a>\n" +
+								"\t\t\t\t\t\t\t\t<a href=\"javascript:void(0);\" disabled=\"false\" onClick=\"quanxian()\" title=\"删除\"><i class=\"fa fa-trash-o\"></i></a>";
+					}else{
+					cell4.innerHTML="<a href=\"javascript:void(0);\" disabled=\"false\" onClick=\"callInfoMain.updClient("+i+")\" title=\"修改\" style=\"margin-left: 10px;margin-right: 10px;\"><i class=\"fa fa-wrench\"></i></a>\n" +
+							"\t\t\t\t\t\t\t\t<a href=\"javascript:void(0);\" disabled=\"false\" onClick=\"callInfoMain.delClient("+i+")\" title=\"删除\"><i class=\"fa fa-trash-o\"></i></a>";
+				}}
+			</script>
+			<script>
+				function quanxian(){
+					sweetAlert.caution("权限不够！")
+				}
+			</script>
+
+			<!-- 主页面 -->
+			<div>
+				<nav id="criteriaNav" class="navbar navbar-default" role="navigation" style="margin-bottom:10px">
+					<div class="form-inline center-block" style="margin-left: 10px;">
+						<div class="row" style="margin-top: 10px; margin-right: 0px;">
+							<div class="col-sm-5">
+								<button type="button" class="btn btn-info btn-sm" onClick="callInfoMain.addClient()" style="margin-right: 0.5em;"><i class="fa fa-plus"></i>添加</button>
+								<!--																					<button type="button" class="btn btn-info btn-sm" onClick="supplierInfoMain.updClient('')" style="margin-right: 0.5em;"><i class="fa fa-pencil"></i>修改</button>-->
+								<button type="button" class="btn btn-info btn-sm" onClick="callInfoMain.delBatchClient()" style="margin-right: 0.5em;"><i class="fa fa-minus"></i>删除</button>
+							</div>
+							<div class="col-sm-5">
+								<div class="form-group">
+									<label for="produce">来电人姓名</label><input type="text" class="form-control" id="callName_" placeholder="请输入来电人姓名">
+								</div>
+							</div>
+							<div class="col-sm-2" style="float: right; margin-top: -10px;">
+								<div class="form-inline" style="float: right; margin-right: 10px; min-width: 168px; text-align: right;">
+									<input type="button" onclick="overload3()" title="重置" value="重置" class="btn navbar-btn btn-info btn-sm" style="margin-right: 0.5em;"><input onclick="chaxun3()" type="button" title="查询" value="查询" class="btn navbar-btn btn-info btn-sm" style="margin-right: 0.5em;">
+								</div>
+							</div>
+						</div>
+					</div>
+				</nav></div>
+
+			<nav id="tableNav" class="navbar navbar-default" role="navigation" style="margin-bottom:10px">
+				<div class="bootstrap-table">
+					<div class="fixed-table-toolbar"></div>
+					<div class="fixed-table-container" style="padding-bottom: 0px;">
+						<div class="fixed-table-header" style="display: none;"></div>
+						<div class="fixed-table-body">
+							<table id="quote_table" class="table table-hover">
+								<thead>
+								<tr id="thesecond">
+									<th class="bs-checkbox " style="width: 36px;" data-field="0">
+										<div class="th-inner ">
+											<input name="btSelectAll" type="checkbox"onclick="selectAllstar(this)">
+										</div>
+										<div class="fht-cell"></div>
+									</th>
+									<th style="" data-field="callName">
+										<div class="th-inner ">用户名</div>
+										<div class="fht-cell"></div>
+									</th>
+									<th style="" data-field="callIllustrate">
+										<div class="th-inner ">来电说明</div>
+										<div class="fht-cell"></div>
+									</th>
+									<th style="" data-field="businessLicense">
+										<div class="th-inner ">操作</div>
+										<div class="fht-cell"></div>
+									</th>
+								</tr>
+								</thead>
+								<tbody id="second">
+<!--								<tr data-index="0">-->
+<!--									<td class="bs-checkbox "><input data-index="0" name="btSelectItem" type="checkbox"></td>-->
+<!--									<td style=""><a class="like" href="javascript:void(0);" title="弘成">小泉</a></td>-->
+<!--									<td style="">协商攻打白宫的方案</td>-->
+<!--									<td style="width: 80px; ">-->
+<!--										<a href="javascript:void(0);" disabled="false" onClick="clientInfoMain.updClient(&quot;e278fe30245e4f038508c282c03975df&quot;)" title="修改" style="margin-left: 10px;margin-right: 10px;"><i class="fa fa-wrench"></i></a>-->
+<!--										<a href="javascript:void(0);" disabled="false" onClick="clientInfoMain.delClient(&quot;e278fe30245e4f038508c282c03975df&quot;)" title="删除"><i class="fa fa-trash-o"></i></a>-->
+<!--									</td>-->
+<!--								</tr>-->
+<!--								<tr data-index="0">-->
+<!--									<td class="bs-checkbox "><input data-index="0" name="btSelectItem" type="checkbox"></td>-->
+<!--									<td style=""><a class="like" href="javascript:void(0);" title="弘成">小普</a></td>-->
+<!--									<td style="">商讨攻打东京需要多少兵力</td>-->
+<!--									<td style="width: 80px; ">-->
+<!--										<a href="javascript:void(0);" disabled="false" onClick="clientInfoMain.updClient(&quot;e278fe30245e4f038508c282c03975df&quot;)" title="修改" style="margin-left: 10px;margin-right: 10px;"><i class="fa fa-wrench"></i></a>-->
+<!--										<a href="javascript:void(0);" disabled="false" onClick="clientInfoMain.delClient(&quot;e278fe30245e4f038508c282c03975df&quot;)" title="删除"><i class="fa fa-trash-o"></i></a>-->
+<!--									</td>-->
+<!--								</tr>-->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</nav>
+
+
+		</div>
+		<script type="text/javascript" src="../common/js/distpicke/js/distpicker.js"></script>
+		<!-- 时间组件 -->
+		<script type="text/javascript" src="../common/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="../common/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<!-- 客户信息 -->
+		<script type="text/javascript" src="../hongcheng/particulars/supplier/callManage/call-info.html.js"></script>
+		<script type="text/javascript" src="../hongcheng/particulars/supplier/callManage/call-info.controller.js"></script>
+		<script type="text/javascript" src="../hongcheng/particulars/supplier/callManage/call-info.main.js"></script>
+
+		<!--body wrapper end-->
+
+		<!--footer section start-->
+		<footer>
+			2017 © 弘成集团有限公司
+		</footer>
+		<!--footer section end-->
+
+	</div>
+	<!-- main content end-->
+</section>
+<script src="../hongcheng/main/js/main-menu.js"></script>
+<script type="text/javascript">
+	// JS加载菜单
+	mainMenu.menu('call_manager');
+</script>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="../common/js/bootstrap.js"></script>
+<script src="../common/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="../common/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="../common/js/modernizr.min.js"></script>
+<script src="../common/js/jquery.nicescroll.js"></script>
+
+<!--easy pie chart-->
+<script src="../common/js/easypiechart/jquery.easypiechart.js"></script>
+<script src="../common/js/easypiechart/easypiechart-init.js"></script>
+
+<!--Sparkline Chart-->
+<script src="../common/js/sparkline/jquery.sparkline.js"></script>
+<script src="../common/js/sparkline/sparkline-init.js"></script>
+
+<!--icheck -->
+<script src="../common/js/iCheck/jquery.icheck.js"></script>
+<script src="../common/js/icheck-init.js"></script>
+
+<!--../common scripts for all pages-->
+<script src="../common/js/scripts.js"></script><div id="ascrail2000" class="nicescroll-rails" style="width: 6px; z-index: 1000; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 0px; height: 100%; right: 0px; opacity: 0;"><div style="position: relative; top: 0px; float: right; width: 6px; height: 949px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails" style="height: 6px; z-index: 1000; background: rgb(66, 79, 99); position: fixed; left: 0px; width: 100%; bottom: 0px; cursor: default; display: none; opacity: 0;"><div style="position: relative; top: 0px; height: 6px; width: 1920px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div><div id="ascrail2001" class="nicescroll-rails" style="width: 3px; z-index: 100; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 0px; left: 237px; height: 552px; display: block; opacity: 0;"><div style="position: relative; top: 0px; float: right; width: 3px; height: 492px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div><div id="ascrail2001-hr" class="nicescroll-rails" style="height: 3px; z-index: 100; background: rgb(66, 79, 99); top: 549px; left: 0px; position: fixed; cursor: default; display: none; opacity: 0; width: 237px;"><div style="position: relative; top: 0px; height: 3px; width: 240px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px; left: 0px;"></div></div>
+
+<!-- sweeAlert -->
+<script src="../common/js/sweetAlert/js/sweet-alert.js"></script>
+<script src="../common/js/sweetAlert/sweetAlert.js"></script>
+
+<!-- noModel -->
+<script src="../hongcheng/custom/no-model/js/jquery-ui.min.js"></script>
+<script src="../hongcheng/custom/no-model/js/jquery.mCustomScrollbar.min.js"></script>
+<script src="../hongcheng/custom/no-model/js/jquery.noModel.js"></script>
+
+<!-- bootstarp-table -->
+<script src="../common/js/bootstrap-table/js/bootstrap-table.js"></script>
+<script src="../common/js/bootstrap-table/js/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- verification -->
+<script src="../hongcheng/custom/verification.js"></script>
+
+<!--jquery.form  -->
+<script src="../common/js/jquery-form/jquery.form.js"></script>
+
+
+<div><div class="sweet-overlay" tabindex="-1"></div><div class="sweet-alert" tabindex="-1"><div class="icon error"><span class="x-mark"><span class="line left"></span><span class="line right"></span></span></div><div class="icon warning"> <span class="body"></span> <span class="dot"></span> </div> <div class="icon sweetAlert-info"> <span class="body"></span> <span class="dot"></span> </div> <div class="icon success"> <span class="line tip"></span> <span class="line long"></span> <div class="placeholder"></div> <div class="fix"></div> </div> <div class="icon custom"></div> <h2>Title</h2><p>Text</p><button class="cancel" tabindex="2">Cancel</button><button class="confirm" tabindex="1">OK</button></div></div><div class="daterangepicker dropdown-menu ltr show-calendar opensright"><div class="calendar left"><div class="daterangepicker_input"><input class="input-mini form-control" type="text" name="daterangepicker_start" value=""><i class="fa fa-calendar glyphicon glyphicon-calendar"></i><div class="calendar-time" style="display: none;"><div></div><i class="fa fa-clock-o glyphicon glyphicon-time"></i></div></div><div class="calendar-table"></div></div><div class="calendar right"><div class="daterangepicker_input"><input class="input-mini form-control" type="text" name="daterangepicker_end" value=""><i class="fa fa-calendar glyphicon glyphicon-calendar"></i><div class="calendar-time" style="display: none;"><div></div><i class="fa fa-clock-o glyphicon glyphicon-time"></i></div></div><div class="calendar-table"></div></div><div class="ranges"><div class="range_inputs"><button class="applyBtn btn btn-sm btn-success" disabled="disabled" type="button">确定</button> <button class="cancelBtn btn btn-sm btn-default" type="button">取消</button></div></div></div></body>
+</html>

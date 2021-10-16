@@ -1,0 +1,20 @@
+1、连接池：
+	我们在实际开发中都会使用连接池。
+	因为它可以减少我们获取连接所消耗的时间。
+2、mybatis中的连接池
+	mybatis连接池提供了3种方式的配置：
+		配置的位置：
+			主配置文件SqlMapConfig.xml中的dataSource标签，type属性就是表示采用何种连接池方式。
+		type属性的取值：
+			POOLED	 采用传统的javax.sql.DataSource规范中的连接池，mybatis中有针对规范的实现
+			UNPOOLED 采用传统的获取连接的方式，虽然也实现Javax.sql.DataSource接口，但是并没有使用池的思想。
+			JNDI	 采用服务器提供的JNDI技术实现，来获取DataSource对象，不同的服务器所能拿到DataSource是不一样。
+				 注意：如果不是web或者maven的war工程，是不能使用的。
+				 我们课程中使用的是tomcat服务器，采用连接池就是dbcp连接池。
+3、mybatis中的事务
+	什么是事务
+	事务的四大特性ACID
+	不考虑隔离性会产生的3个问题
+	解决办法：四种隔离级别
+
+	它是通过sqlsession对象的commit方法和rollback方法实现事务的提交和回滚

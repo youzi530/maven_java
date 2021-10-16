@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/hm_mybatisday03_05mybatis_JNDI" />
+    <file type="web" url="file://$PROJECT_DIR$/maven_crm" />
+    <file type="web" url="file://$PROJECT_DIR$/maven_mybaits_web" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/biliblikuang_mybatisplusday01_01mpdemo/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/hm_mybatis_day01mybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/hm_mybatis_day02mybatisAnnotation/pom.xml" />
+        <option value="$PROJECT_DIR$/hm_mybatis_day03mybatis_DaoImpl/pom.xml" />
+        <option value="$PROJECT_DIR$/hm_mybatis_day04mybatis_MyselfDesign/pom.xml" />
+        <option value="$PROJECT_DIR$/maven_ crawler/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

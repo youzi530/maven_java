@@ -1,0 +1,8 @@
+com\hc\sql\dynamic.class
+com\hc\dao\IAccountDao.class
+com\hc\dao\IRoleDao.class
+com\hc\entity\Account.class
+com\hc\entity\Users.class
+com\hc\entity\Role.class
+com\hc\entity\User.class
+com\hc\dao\IUserDao.class

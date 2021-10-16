@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hc.dao.IUserDao">
+    <!--设置Mapper的二级缓存开关-->
+    <cache />
+
+    <select id="findAll" resultType="com.hc.entity.Users">
+        select * from users
+    </select>
+
+    <insert id="insertUsers" parameterType="com.hc.entity.Users">
+        -- 在这里可以查询自增的id
+        <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+
+        insert into users(username,password,name) values (#{username},#{password},#{name})
+    </insert>
+
+    <delete id="deleteUsers" parameterType="int">
+        delete from users where id = #{id}
+    </delete>
+
+    <update id="updateUsers" parameterType="com.hc.entity.Users">
+        update users set username=#{username},password=#{password},name=#{name} where id=#{id}
+    </update>
+
+    <!-- 修改一条数据（加set标签改良版本）-->
+    <update id="updateUsers1" parameterType="com.hc.entity.Users">
+        update users
+        <set>
+            <if test="username !=null and username != ''">username = #{username},</if>
+            <if test="password !=null and password != ''">password = #{password},</if>
+            <if test="name !=null and name != ''">name= #{name}</if>
+        </set>
+        where id= #{id}
+    </update>
+
+    <select id="findUsersByInfo" resultType="com.hc.entity.Users" parameterType="com.hc.entity.Info">
+        select * from users where id = #{users.id}
+    </select>
+
+    <!--提取公共部分的代码（写了一个模糊查询） //模糊查询  -->
+    <sql id="selectsql">
+      select id,username,password,name from users
+    </sql>
+
+    <select id="findUsersByUserName" resultType="com.hc.entity.Users">
+        <include refid="selectsql"></include>  where username like #{value}
+    </select>
+
+    <!--    解释动态sql-->
+    <select id="findUsersByActiveSql" resultType="com.hc.entity.Users" parameterType="com.hc.entity.Users">
+        select id,username,password,name from users where 1=1
+        <if test="username !=null and username != ''">
+            and username = #{username}
+        </if>
+        <if test="name !=null and name != ''">
+            and name = #{name}
+        </if>
+    </select>
+
+    <!-- 加上where标签的改良版-->
+    <select id="findUsersByActiveSql1" resultType="com.hc.entity.Users" parameterType="com.hc.entity.Users">
+        select id,username,password,name from users
+        <where>
+            <if test="username !=null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="name !=null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <!-- 加上choose when 改良版  但是存在一问题就是只能拼接一个and，比如同时满足username和name的话，只能拼接前一个-->
+    <select id="findUsersByActiveSql2" resultType="com.hc.entity.Users" parameterType="com.hc.entity.Users">
+        select id,username,password,name from users
+        <where>
+            <choose>
+                <when test="username !=null and username != ''">
+                    and username = #{username}
+                </when>
+                <when test="name !=null and name != ''">
+                    and name = #{name}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <!--遍历集合，在Info集合里面加上一个集合ids,用foreach来实现-->
+    <select id="findUsersByInfo1" resultType="com.hc.entity.Users" parameterType="com.hc.entity.Info">
+        select id,username,password,name from users
+        <where>
+            <if test="ids !=null and ids.size()>0">
+                <foreach collection="ids" open="id in (" close=")" item="myid" separator=",">
+                    #{myid}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+<!-- 第二天加强-->
+
+
+    <!--如果实体类和数据库的字段不一样的话，怎么办？新建一个实体类，UsersTwo里面的username改为uname-->
+    <!--方法一：用别名-->
+    <select id="findAll1" resultType="com.hc.entity.UsersTwo">
+        select id,username as uname,password,name from users
+    </select>
+
+    <!--方法二：用resultMap-->
+    <resultMap id="usermap" type="com.hc.entity.UsersTwo">
+        <!--主键,多个主键的话，写多个id-->
+        <id property="id" column="id"></id>
+        <!--非主键-->
+        <result property="uname" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+    <select id="findAll2" resultMap="usermap">
+        select id,username,password,name from users
+    </select>
+
+
+    <!--一对多数据库查询，就是一个用户对应多个账户的查询-->
+    <resultMap id="usermap2" type="com.hc.entity.UsersThree">
+        <!--主键,多个主键的话，写多个id-->
+        <id property="id" column="id"></id>
+        <!--非主键-->
+        <result property="uname" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="name" column="name"></result>
+            <collection property="accounts" ofType="com.hc.entity.Account">
+                <id property="id" column="aid"></id>
+                <result property="uid" column="uid"></result>
+                <result property="money" column="money"></result>
+            </collection>
+    </resultMap>
+    <select id="findAll3" resultMap="usermap2">
+        select u.*,a.ID as aid,a.UID,a.MONEY from users u LEFT JOIN account a on u.id=a.UID
+    </select>
+
+    <!--在Account里面进行一对一的懒加载的时候，需要加一个语句，作为查询users-->
+    <select id="findUserById" resultMap="usermap">
+        select * from users where id = #{id}
+    </select>
+
+
+    <!--一对多数据库查询，懒加载的使用-->
+    <resultMap id="usermap3" type="com.hc.entity.UsersThree">
+        <!--主键,多个主键的话，写多个id-->
+        <id property="id" column="id"></id>
+        <!--非主键-->
+        <result property="uname" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="name" column="name"></result>
+            <collection property="accounts" ofType="com.hc.entity.Account" column="id" select="com.hc.dao.IAccountDao.findById">
+                <id property="id" column="aid"></id>
+                <result property="uid" column="uid"></result>
+                <result property="money" column="money"></result>
+            </collection>
+    </resultMap>
+    <select id="findAll4" resultMap="usermap3">
+        select u.*,a.ID as aid,a.UID,a.MONEY from users u LEFT JOIN account a on u.id=a.UID
+    </select>
+
+
+    <!--一级缓存和二级缓存的区别-->
+    <select id="findUserByUserId" resultType="com.hc.entity.UsersThree" parameterType="int" useCache="true">
+        select * from users where id = #{id}
+    </select>
+
+
+
+</mapper>

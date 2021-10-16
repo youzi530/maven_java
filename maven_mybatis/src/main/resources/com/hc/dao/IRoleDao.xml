@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hc.dao.IRoleDao">
+
+
+<!-- 第二天加强-->
+
+    <!--测试-->
+    <select id="findAll" resultType="com.hc.entity.Role">
+        select * from role
+    </select>
+
+
+    <!--多对多数据库查询，就是一个用户对应多个账户的查询-->
+    <resultMap id="rolemap" type="com.hc.entity.UsersTwo">
+        <!--主键,多个主键的话，写多个id-->
+        <id property="id" column="rid"></id>
+        <!--非主键-->
+        <result property="roleName" column="ROLE_NAME"></result>
+        <result property="roleDesc" column="ROLE_DESC"></result>
+
+            <collection property="usersTwo" ofType="com.hc.entity.UsersTwo">
+                <id property="id" column="id"></id>
+                <result property="uname" column="username"></result>
+                <result property="password" column="password"></result>
+                <result property="uname" column="uname"></result>
+            </collection>
+    </resultMap>
+    <select id="findAll2" resultMap="rolemap">
+        select r.id as rid,r.`ROLE_NAME`,r.`ROLE_DESC`,u.* from role r
+         left join user_role ur on  r.`ID`=ur.`RID`
+         left join users u on ur.`UID`=u.`ID`
+    </select>
+
+
+</mapper>

@@ -1,0 +1,7 @@
+.quantity-remove, .quantity-add {
+    cursor: pointer;
+}
+.quantity-add.glyphicon, .quantity-remove.glyphicon {
+    display: block;
+    cursor: pointer;
+}

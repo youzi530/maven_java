@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="WangBT">
+<link rel="icon" href="../common/images/logo_icon.ico" type="image/x-icon"/>
+
+<link rel="stylesheet" href="../common/js/iCheck/skins/minimal/minimal.css" />
+<link rel="stylesheet" href="../common/js/iCheck/skins/square/square.css" />
+<link rel="stylesheet" href="../common/css/clndr.css" />
+<link rel="stylesheet" href="../common/css/style.css" />
+<link rel="stylesheet" href="../common/css/style-responsive.css" />
+<link rel="stylesheet" href="../common/js/bootstrap-table/css/bootstrap-table.css">
+<link rel="stylesheet" href="../common/js/bootstrap-multiselect/css/bootstrap-multiselect.css">
+<link rel="stylesheet" href="../common/js/sweetAlert/css/sweet-alert.css">
+<link rel="stylesheet" href="../hongcheng/custom/no-model/css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="../hongcheng/custom/no-model/css/noModel.css">
+<script type="text/javascript" src="../common/js/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="../hongcheng/custom/commonality.js"></script>
+	<script src="../crmjs/afterLogin.js"></script>
+	<script src="../crmjs/crmajax.js"></script>
+	<script src="../crmjs/adminHide.js"></script>
+	<script src="../crmjs/sspHide.js"></script>
+	<script src="../crmjs/clientHide.js"></script>
+	<script>
+		$(function () {
+            //权限控制
+            afterLogin.afterlogin()
+            //权限，名字，性别，工号
+            var userId;
+            crmajax.ajax({
+                url:"identity.do",
+                type:"post",
+                data:{
+
+                },
+                success:function (data) {
+                    data = data.substring(3,data.length);
+                    var datas = data.split(",");
+                    //alert(datas[0] + datas[1] + datas[2] + datas[3])
+                    userId = parseInt(datas[3]);//number类型
+                    $("#username").text(datas[1])
+                    if (datas[2] == "女"){
+                        $("#photo").attr("src","../common/images/photos/user5.png")
+                    }
+                },
+                error:function (data) {
+                    sweetAlert.caution("未知错误",data)
+                }
+            })
+
+        })
+	</script>
+	<script src="../crmjs/jquery.mousewheel.min.js"></script>
+<title>CRM管理系统</title>
+</head>
+	<body class="sticky-header">
+		<section>
+			<div class="left-side sticky-left-side">
+				<div class="logo">
+					<a href="main.html"><img src="../common/images/logo_icon.png" alt=""></a>
+				</div>
+
+				<div class="logo-icon text-center">
+					<a href="main.html"><img src="../common/images/logo_icon.png" alt=""></a>
+				</div>
+
+
+					<!--sidebar nav start-->
+					<ul id="menuUL" class="nav nav-pills nav-stacked custom-nav">
+						
+					</ul>
+				</div>
+			</div>
+			<!-- left side end-->
+
+			<!-- main content start-->
+			<div class="main-content">
+
+				<!-- header section start-->
+				<div class="header-section">
+
+					<!--toggle button start-->
+					<a class="toggle-btn"><i class="fa fa-bars"></i></a>
+					<!--toggle button end-->
+					<!--search end-->
+
+					<!--notification menu start -->
+					<div class="menu-right">
+						<ul class="notification-menu">
+							<li>
+								<a href="javascript:void(0);" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+
+                                    <img id="photo"  alt="" src="../common/images/photos/user1.png">
+                                    <span id="username"></span>
+									<span class="caret"></span>
+
+								</a>
+								<ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+									<li><a href="javascript:void(0);"><i class="fa fa-user"></i>  简介</a></li>
+									<li><a href="javascript:void(0);"><i class="fa fa-cog"></i>  设置</a></li>
+									<li><a href="javascript:void(0);" onClick="mainMenu.logOut()"><i class="fa fa-sign-out"></i> 退出</a></li>
+								</ul>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+				<div id="mainWrapper" class="wrapper">
+					
+				</div>
+				<!--body wrapper end-->
+
+				<!--footer section start-->
+				<footer>
+					2017 &copy; 弘成集团有限公司
+				</footer>
+				<!--footer section end-->
+
+			</div>
+			<!-- main content end-->
+		</section>
+		<script src="../hongcheng/main/js/main-menu.js" ></script>
+		<script type="text/javascript">
+			// JS加载菜单
+			mainMenu.menu('main');
+		</script>
+		
+		<!-- Placed js at the end of the document so the pages load faster -->
+		<script src="../common/js/bootstrap.js"></script>
+		<script src="../common/js/jquery-ui-1.9.2.custom.min.js"></script>
+		<script src="../common/js/jquery-migrate-1.2.1.min.js"></script>
+		<script src="../common/js/modernizr.min.js"></script>
+		<script src="../common/js/jquery.nicescroll.js"></script>
+	
+		<!--easy pie chart-->
+		<script src="../common/js/easypiechart/jquery.easypiechart.js"></script>
+		<script src="../common/js/easypiechart/easypiechart-init.js"></script>
+	
+		<!--Sparkline Chart-->
+		<script src="../common/js/sparkline/jquery.sparkline.js"></script>
+		<script src="../common/js/sparkline/sparkline-init.js"></script>
+	
+		<!--icheck -->
+		<script src="../common/js/iCheck/jquery.icheck.js"></script>
+		<script src="../common/js/icheck-init.js"></script>
+	
+		<!--../common scripts for all pages-->
+		<script src="../common/js/scripts.js"></script>
+		
+		<!-- sweeAlert -->
+		<script src="../common/js/sweetAlert/js/sweet-alert.js"></script>
+		<script src="../common/js/sweetAlert/sweetAlert.js"></script>
+		
+		 noModel
+		<script src="../hongcheng/custom/no-model/js/jquery-ui.min.js"></script>
+		<script src="../hongcheng/custom/no-model/js/jquery.mCustomScrollbar.min.js"></script>
+		<script src="../hongcheng/custom/no-model/js/jquery.noModel.js"></script>
+		
+		<!-- bootstarp-table -->
+		<script src="../common/js/bootstrap-table/js/bootstrap-table.js"></script>
+		<script src="../common/js/bootstrap-table/js/bootstrap-table-zh-CN.min.js"></script>
+		
+		<!-- bootstrap-multiselect -->
+		<script src="../common/js/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+		
+		<!-- verification -->
+		<script src="../hongcheng/custom/verification.js"></script>
+		
+		<!--jquery.form  -->
+		<script src="../common/js/jquery.form.js"></script>
+		
+		<!--echarts.js  -->
+		<script src="../common/js/echarts.js"></script>
+	</body>
+</html>

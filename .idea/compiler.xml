@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="imooc_mybatisPlusday03_01Paging" />
+        <module name="hm_mybatisday03_01mybatis_DatasourceAndTx" />
+        <module name="hm_mybatisday03_05mybatis_JNDI" />
+        <module name="hm_mybatisday04_04mybatis_AnnoOneToManyTables" />
+        <module name="hm_mybatisday02_01mybatis_CRUD" />
+        <module name="hm_mybatisday04_03mybatis_AnnotationHigh" />
+        <module name="hm_mybatisday01_01mybatis" />
+        <module name="hm_mybatisday03_03mybatis_OneTwoManyTables" />
+        <module name="hm_mybatisday04_02mybatis_Cache" />
+        <module name="maven_mybaits_web" />
+        <module name="maven_crm" />
+        <module name="maven_mybatis" />
+        <module name="maven_crawler" />
+        <module name="hm_mybatisday03_04mybatis_ManyToManyTables" />
+        <module name="hm_mybatisday01_03mybatis_DaoImpl" />
+        <module name="imooc_mybatisPlusday01_01MPDemo" />
+        <module name="hm_mybatisday03_02mybatis_DynamicSQL" />
+        <module name="maven_servletDemo" />
+        <module name="imooc_mybatisPlusday02_01MPcrud" />
+        <module name="hm_mybatisday01_04mybatis_MyselfDesign" />
+        <module name="hm_mybatisday01_02mybatis_Annotation" />
+        <module name="hm_mybatisday04_01mybatis_LazyLoad" />
+        <module name="hm_mybatisday02_02mybatis_Dao" />
+        <module name="biliblikuang_mybatisplusday01_01mpdemo" />
+        <module name="maven_annotation" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bilibilikuang_mybatisplusday01_01mpdemo" target="1.5" />
+      <module name="hm_mybatis_day01mybatis" target="1.7" />
+      <module name="hm_mybatis_day02mybatisAnnotation" target="1.7" />
+      <module name="hm_mybatis_day03mybatis_DaoImpl" target="1.7" />
+      <module name="hm_mybatis_day04mybatis_MyselfDesign" target="1.7" />
+      <module name="test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bilibilikuang_mybatisplusday01_01mpdemo" options="-parameters" />
+      <module name="biliblikuang_mybatisplusday01_01mpdemo" options="-parameters" />
+      <module name="hm_mybatisday01_01mybatis" options="-parameters" />
+      <module name="hm_mybatisday01_02mybatis_Annotation" options="-parameters" />
+      <module name="hm_mybatisday01_03mybatis_DaoImpl" options="-parameters" />
+      <module name="hm_mybatisday01_04mybatis_MyselfDesign" options="-parameters" />
+      <module name="hm_mybatisday02_01mybatis_CRUD" options="-parameters" />
+      <module name="hm_mybatisday02_02mybatis_Dao" options="-parameters" />
+      <module name="hm_mybatisday03_01mybatis_DatasourceAndTx" options="-parameters" />
+      <module name="hm_mybatisday03_02mybatis_DynamicSQL" options="-parameters" />
+      <module name="hm_mybatisday03_03mybatis_OneTwoManyTables" options="-parameters" />
+      <module name="hm_mybatisday03_04mybatis_ManyToManyTables" options="-parameters" />
+      <module name="hm_mybatisday03_05mybatis_JNDI" options="-parameters" />
+      <module name="hm_mybatisday04_01mybatis_LazyLoad" options="-parameters" />
+      <module name="hm_mybatisday04_02mybatis_Cache" options="-parameters" />
+      <module name="hm_mybatisday04_03mybatis_AnnotationHigh" options="-parameters" />
+      <module name="hm_mybatisday04_04mybatis_AnnoOneToManyTables" options="-parameters" />
+      <module name="imooc_mybatisPlusday01_01MPDemo" options="-parameters" />
+      <module name="imooc_mybatisPlusday02_01MPcrud" options="-parameters" />
+      <module name="imooc_mybatisPlusday03_01Paging" options="-parameters" />
+      <module name="maven_annotation" options="-parameters" />
+      <module name="maven_crawler" options="-parameters" />
+      <module name="maven_crm" options="-parameters" />
+      <module name="maven_mybaits_web" options="-parameters" />
+      <module name="maven_mybatis" options="-parameters" />
+      <module name="maven_servletDemo" options="-parameters" />
+      <module name="test" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/biliblikuang_mybatisplusday01_01mpdemo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday01_01mybatis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday01_01mybatis/上课资料/Noname1.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday01_02mybatis_Annotation" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday01_03mybatis_DaoImpl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday01_04mybatis_MyselfDesign" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday02_01mybatis_CRUD" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday02_01mybatis_CRUD/第二天上课资料/Noname1.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday02_02mybatis_Dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday03_01mybatis_DatasourceAndTx" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday03_01mybatis_DatasourceAndTx/上课资料/Noname2.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday03_02mybatis_DynamicSQL" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday03_03mybatis_OneTwoManyTables" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday03_04mybatis_ManyToManyTables" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday03_05mybatis_JNDI" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday04_01mybatis_LazyLoad" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday04_02mybatis_Cache" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday04_03mybatis_AnnotationHigh" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hm_mybatisday04_04mybatis_AnnoOneToManyTables" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/imooc_mybatisPlusday01_01MPDemo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/imooc_mybatisPlusday02_01MPcrud" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/imooc_mybatisPlusday03_01Paging" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maven_annotation" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maven_crawler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maven_crm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maven_crm/src/c3p0-config.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/maven_mybaits_web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maven_mybatis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maven_servletDemo" charset="UTF-8" />
+    <file url="PROJECT" charset="GBK" />
+  </component>
+</project>

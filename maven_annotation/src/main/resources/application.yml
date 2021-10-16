@@ -1,0 +1,11 @@
+#指定端口号
+server:
+  port: 8090
+
+#Database
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///shangguigu
+    username: root
+    password: 123456

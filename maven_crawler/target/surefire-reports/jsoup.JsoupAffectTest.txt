@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Test set: jsoup.JsoupAffectTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 0.548 s <<< FAILURE! - in jsoup.JsoupAffectTest
+testDOM(jsoup.JsoupAffectTest)  Time elapsed: 0.028 s  <<< ERROR!
+java.io.FileNotFoundException: C:\Users\26762\Desktop\test.html (系统找不到指定的文件。)
+	at jsoup.JsoupAffectTest.testDOM(JsoupAffectTest.java:69)
+
+testData(jsoup.JsoupAffectTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.io.FileNotFoundException: C:\Users\26762\Desktop\test.html (系统找不到指定的文件。)
+	at jsoup.JsoupAffectTest.testData(JsoupAffectTest.java:104)
+
+testFile(jsoup.JsoupAffectTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.io.FileNotFoundException: C:\Users\26762\Desktop\test.html (系统找不到指定的文件。)
+	at jsoup.JsoupAffectTest.testFile(JsoupAffectTest.java:50)
+
+testText(jsoup.JsoupAffectTest)  Time elapsed: 0.018 s  <<< ERROR!
+java.io.FileNotFoundException: File 'C:\Users\26762\Desktop\test.html' does not exist
+	at jsoup.JsoupAffectTest.testText(JsoupAffectTest.java:38)
+
+testSelector(jsoup.JsoupAffectTest)  Time elapsed: 0 s  <<< ERROR!
+java.io.FileNotFoundException: C:\Users\26762\Desktop\test.html (系统找不到指定的文件。)
+	at jsoup.JsoupAffectTest.testSelector(JsoupAffectTest.java:146)
+

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <properties resource="jdbc.properties">
+    </properties>
+
+
+    <settings>
+        <!--懒加载的使用-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 开启二级缓存，默认值是true -->
+        <setting name="cacheEnabled" value="true" />
+    </settings>
+    
+    
+    <!--这里有两种写法：以后需要用到com.hc.entity.Users的话，直接写user即可，
+        第二种写法就是com.hc.entity.Users默认就是user（小写）-->
+    <typeAliases>
+        <!--一：-->
+        <typeAlias type="com.hc.entity.Users" alias="user"></typeAlias>
+        <typeAlias type="com.hc.entity.Info" alias="info"></typeAlias>
+        <!-- 二：-->
+        <!--<package name="com.hc.entity"/>-->
+    </typeAliases>
+    
+    
+    <environments default="mysqlSimple">
+        <!-- 环境变量：可以配置多个环境变量，比如使用多数据源时，就需要配置多个环境变量 -->
+        <environment id="mysql">
+            <!-- 事务管理器 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 数据源 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/test"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+        
+        <!-- 这里将所有的信息（用户，密码，驱动）提取到一个properties文件里面，再来读取，做为简化版 ,
+            需要新建一个jdbc.properties文件，然后再在本文件里面最上面加一个<properties resource="jdbc.properties">标签
+            必须放到最上面，参考官方文档的顺序-->
+        <environment id="mysqlSimple">
+            <!-- 事务管理器 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 数据源 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url"
+                          value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        
+        <environment id="oracle">
+            <!-- 事务管理器 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 数据源 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/test"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    
+<!--    下面的第一种写法的话，指向这个xml文件里面，第二种写法是指向一个文件夹，指向这个文件夹里面的任意一个xml文件-->
+    <mappers>
+<!--        一：-->
+<!--        <mapper resource="com/hc/dao/IUserDao.xml"/>-->
+<!--        二：-->
+        <package name="com.hc.dao"/>
+
+
+    </mappers>
+</configuration>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hc.dao.IAccountDao">
+
+
+<!-- 第二天加强-->
+
+
+    <select id="findAll" resultType="com.hc.entity.Account">
+        select * from account
+    </select>
+
+    <!--一对一的数据库查询,就是一个账户对应一个用户，其实也是多个账户对应一个用户-->
+    <resultMap id="accountmap" type="com.hc.entity.Account">
+        <!--主键,多个主键的话，写多个id-->
+        <id property="id" column="aid"></id>
+        <!--非主键-->
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+            <association property="usersTwo" javaType="com.hc.entity.UsersTwo">
+                <id property="id" column="id"></id>
+
+                <result property="uname" column="username"></result>
+                <result property="password" column="password"></result>
+                <result property="name" column="name"></result>
+            </association>
+    </resultMap>
+    <select id="findAll1" resultMap="accountmap">
+        SELECT a.id AS aid,a.`UID`,a.`MONEY`,u.id ,username,password,name FROM account a,USERS u WHERE a.`UID`=u.`id`;
+    </select>
+
+    <!-- 使用懒加载的方式来查询,需要在sqlMapConfig.xml里面加setting，然后在下面的association里面加上column和select，再在IUserDao.xml里面加上一个select的查询语句-->
+    <!--一对一的数据库查询,就是一个账户对应一个用户，其实也是多个账户对应一个用户-->
+    <resultMap id="accountmap1" type="com.hc.entity.Account">
+        <!--主键,多个主键的话，写多个id-->
+        <id property="id" column="aid"></id>
+        <!--非主键-->
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+            <association property="usersTwo" javaType="com.hc.entity.UsersTwo" column="uid" select="com.hc.dao.IUserDao.findUserById">
+                <id property="id" column="id"></id>
+
+                <result property="uname" column="username"></result>
+                <result property="password" column="password"></result>
+                <result property="name" column="name"></result>
+            </association>
+    </resultMap>
+    <select id="findAll2" resultMap="accountmap1">
+        SELECT a.id AS aid,a.`UID`,a.`MONEY`,u.id ,username,password,name FROM account a,USERS u WHERE a.`UID`=u.`id`;
+    </select>
+
+    <!--在这里将resultMap里面的association去掉，可以避免重复调用，不去掉也可以-->
+    <resultMap id="accountmap2" type="com.hc.entity.Account">
+        <!--主键,多个主键的话，写多个id-->
+        <id property="id" column="aid"></id>
+        <!--非主键-->
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+    </resultMap>
+
+    <!--在User里面进行一对多的懒加载的时候，需要加一个语句，作为查询Account-->
+    <select id="findById" resultMap="accountmap2">
+        select id as aid,uid,money from account where id = #{id}
+    </select>
+
+
+</mapper>
